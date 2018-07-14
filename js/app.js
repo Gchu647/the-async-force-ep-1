@@ -96,20 +96,32 @@ function getFilms() {
       //Send an XHR to the link
       let reqPlanet = new XMLHttpRequest();
       reqPlanet.addEventListener("load", getPlanet);
-      reqPlanet.open("GET", filmsArr[i]["planets"][j]);
+      reqPlanet.open("GET", planetLink);
       reqPlanet.send();
-
-      // Create three more appends, might have to move this into getPlanet()
-      let filmPlanets = document.createElement("ul");
-      filmPlanets.className = "filmPlanets";
-      film.appendChild(filmPlanets);
     }
 
     // get planet name and attach it to the planetName h4
     function getPlanet() {
-      let planetName = JSON.parse(this.responseText)["name"]; // Get planet name
+      // Get and store planet name
+      let pNameTxt = JSON.parse(this.responseText)["name"];
       console.log("Film name: ", filmsArr[i]["title"]);
-      console.log(planetName);
+      console.log(pNameTxt);
+
+      // Create three more html elements to display pNameTxt;
+      let filmPlanets = document.createElement("ul");
+      filmPlanets.className = "filmPlanets";
+      film.appendChild(filmPlanets);
+
+      let planet = document.createElement("li");
+      planet.className = "planet";
+      
+      let planetName = document.createElement("h4");
+      planetName.className = "planetName";
+      planetName.innerHTML = pNameTxt;
+
+      planet.appendChild(planetName);
+      filmPlanets.appendChild(planet);
+      film.appendChild(filmPlanets);
     }
 
     film.appendChild(filmTitle);
